@@ -1,0 +1,1 @@
+rm -rf .MLX42/ ; git clone https://github.com/codam-coding-college/MLX42.git ; mv MLX42 .MLX42 ; make re
