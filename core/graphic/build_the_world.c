@@ -37,22 +37,6 @@ void	set_value_of_god_building(t_god *god, t_cub *cub,
 	god->current_step *= god->step;
 }
 
-// void	build_south_and_west(t_god *god, t_cub *cub,
-// 			t_rayx *ray, int id)
-// {
-// 	if (id == 1 && ray->direction == 3)
-// 	{
-// 		god->value = (((int)(ray->a_x) % 64)
-// 				+ ((int)god->current_step * 64)) * 4;
-// 		build_south(god, cub, ray);
-// 	}
-// 	else
-// 	{
-// 		god->value = (((int)(ray->a_y) % 64)
-// 				+ ((int)god->current_step * 64)) * 4;
-// 		build_west(god, cub, ray);
-// 	}
-// }
 
 void	build_south_and_west(t_god *god, t_cub *cub,
 			t_rayx *ray, int id)
