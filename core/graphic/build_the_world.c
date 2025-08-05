@@ -12,30 +12,62 @@
 
 #include "../../cub3d.h"
 
-void	set_value_of_god_building(t_god *god, t_cub *cub,
-			t_rayx *ray, float dist)
+// void	set_value_of_god_building(t_god *god, t_cub *cub,
+// 			t_rayx *ray, float dist)
+// {
+// 	god->i_pixel_y = 0;
+// 	god->fish_eyes = cub->player.pa - ray->angle;
+// 	if (god->fish_eyes > 2 * PI)
+// 		god->fish_eyes -= 2 * PI;
+// 	else if (god->fish_eyes < 0)
+// 		god->fish_eyes += 2 * PI;
+// 	dist = dist * cosf(god->fish_eyes);
+// 	god->hauteur = (SCREEN_SIZE_Y * 64) / (dist);
+// 	god->ciel = (SCREEN_SIZE_Y - god->hauteur) / 2;
+// 	god->sol = (SCREEN_SIZE_Y + god->hauteur) / 2;
+// 	god->color = 0;
+// 	god->step = 64.0f / (float)(god->hauteur);
+// 	god->current_step = 0.0f;
+// 	god->wall = (SCREEN_SIZE_Y + god->hauteur) / 2;
+// 	if (god->wall > SCREEN_SIZE_Y)
+// 	{
+// 		god->current_step = (god->hauteur - SCREEN_SIZE_Y) / 2.0;
+// 		god->wall = SCREEN_SIZE_Y;
+// 	}
+// 	god->current_step *= god->step;
+// }
+
+void	set_value_of_god_building(t_god *god, t_cub *cub, t_rayx *ray, float dist)
 {
 	god->i_pixel_y = 0;
 	god->fish_eyes = cub->player.pa - ray->angle;
-	if (god->fish_eyes > 2 * PI)
+
+	// Normalisation de l'angle entre 0 et 2π
+	while (god->fish_eyes > 2 * PI)
 		god->fish_eyes -= 2 * PI;
-	else if (god->fish_eyes < 0)
+	while (god->fish_eyes < 0)
 		god->fish_eyes += 2 * PI;
-	dist = dist * cosf(god->fish_eyes);
-	god->hauteur = (SCREEN_SIZE_Y * 64) / (dist);
+
+	dist *= cosf(god->fish_eyes);
+	if (dist <= 0.0f)
+		dist = 0.0001f; // pour éviter une division par 0
+
+	god->hauteur = (SCREEN_SIZE_Y * 64) / dist;
 	god->ciel = (SCREEN_SIZE_Y - god->hauteur) / 2;
 	god->sol = (SCREEN_SIZE_Y + god->hauteur) / 2;
 	god->color = 0;
 	god->step = 64.0f / (float)(god->hauteur);
 	god->current_step = 0.0f;
-	god->wall = (SCREEN_SIZE_Y + god->hauteur) / 2;
+	god->wall = god->sol;
+
 	if (god->wall > SCREEN_SIZE_Y)
 	{
-		god->current_step = (god->hauteur - SCREEN_SIZE_Y) / 2.0;
+		god->current_step = (god->hauteur - SCREEN_SIZE_Y) / 2.0f;
 		god->wall = SCREEN_SIZE_Y;
 	}
 	god->current_step *= god->step;
 }
+
 
 
 void	build_south_and_west(t_god *god, t_cub *cub,
